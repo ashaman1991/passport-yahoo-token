@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>passport-yahoo-token by ghaiklor</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>passport-yahoo-token</h1>
+          <h2>Passport strategy for authenticating with Yahoo access tokens</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/ghaiklor/passport-yahoo-token/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/ghaiklor/passport-yahoo-token/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/ghaiklor/passport-yahoo-token" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a id="passport-yahoo-token" class="anchor" href="#passport-yahoo-token" aria-hidden="true"><span class="octicon octicon-link"></span></a>passport-yahoo-token</h1>
+
+<p><a href="http://badge.fury.io/js/passport-yahoo-token"><img src="https://badge.fury.io/js/passport-yahoo-token.svg" alt="npm version"></a> <a href="https://travis-ci.org/ghaiklor/passport-yahoo-token"><img src="https://travis-ci.org/ghaiklor/passport-yahoo-token.svg?branch=master" alt="Build Status"></a></p>
+
+<p><a href="http://passportjs.org/">Passport</a> strategies for authenticating with <a href="http://www.yahoo.com/">Yahoo!</a> OAuth2 access tokens.</p>
+
+<p>This module lets you authenticate using Yahoo! in your Node.js applications by access tokens.
+By plugging into Passport, Yahoo! authentication can be easily and unobtrusively integrated into any application or framework that supports <a href="http://www.senchalabs.org/connect/">Connect</a>-style middleware, including <a href="http://expressjs.com/">Express</a>.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<div class="highlight highlight-shell"><pre>npm install passport-yahoo-token</pre></div>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="configure-strategy" class="anchor" href="#configure-strategy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configure Strategy</h3>
+
+<p>The Yahoo authentication strategy authenticates users using a Yahoo account and OAuth2 access tokens.
+The strategy requires a <code>verify</code> callback, which accepts accessToken, refreshToken, profile and calls <code>done</code> providing a user, as well as <code>options</code> specifying a clientID and clientSecret.</p>
+
+<div class="highlight highlight-javascript"><pre>passport.use(<span class="pl-k">new</span> <span class="pl-en">YahooTokenStrategy</span>({
+    clientID<span class="pl-k">:</span> YAHOO_CLIENT_ID,
+    clientSecret<span class="pl-k">:</span> YAHOO_CLIENT_SECRET,
+    passReqToCallback<span class="pl-k">:</span> <span class="pl-c1">true</span>
+}, <span class="pl-st">function</span>(<span class="pl-vpf">req</span>, <span class="pl-vpf">accessToken</span>, <span class="pl-vpf">refreshToken</span>, <span class="pl-vpf">profile</span>, <span class="pl-vpf">next</span>) {
+    User.findOrCreate({<span class="pl-s1"><span class="pl-pds">'</span>yahoo.id<span class="pl-pds">'</span></span><span class="pl-k">:</span> profile.<span class="pl-sc">id</span>}, <span class="pl-st">function</span>(<span class="pl-vpf">error</span>, <span class="pl-vpf">user</span>) {
+        <span class="pl-k">return</span> next(error, user);
+    });
+}));</pre></div>
+
+<h3>
+<a id="authenticate-requests" class="anchor" href="#authenticate-requests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authenticate Requests</h3>
+
+<p>Use <code>passport.authenticate()</code>, specifying the <code>yahoo-token</code> strategy, to authenticate requests.</p>
+
+<p>For example, as route middleware in an <a href="http://expressjs.com/">Express</a> application:</p>
+
+<div class="highlight highlight-javascript"><pre>app.get(<span class="pl-s1"><span class="pl-pds">'</span>/auth/yahoo<span class="pl-pds">'</span></span>, passport.authenticate(<span class="pl-s1"><span class="pl-pds">'</span>yahoo-token<span class="pl-pds">'</span></span>);</pre></div>
+
+<p>Or if you are using Sails framework:</p>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-c">// AuthController.js</span>
+<span class="pl-sv">module</span>.exports <span class="pl-k">=</span> {
+    <span class="pl-en">yahoo</span>: <span class="pl-st">function</span>(<span class="pl-vpf">req</span>, <span class="pl-vpf">res</span>) {
+        passport.authenticate(<span class="pl-s1"><span class="pl-pds">'</span>yahoo-token<span class="pl-pds">'</span></span>, <span class="pl-st">function</span>(<span class="pl-vpf">error</span>, <span class="pl-vpf">user</span>, <span class="pl-vpf">info</span>) {
+            <span class="pl-k">if</span> (error) <span class="pl-k">return</span> res.serverError(error);
+            <span class="pl-k">if</span> (info) <span class="pl-k">return</span> res.unauthorized(info);
+            <span class="pl-k">return</span> res.ok(user);
+        })(req, res);
+    }
+};</pre></div>
+
+<h3>
+<a id="parameters-in-request" class="anchor" href="#parameters-in-request" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parameters in request</h3>
+
+<p>Based on examples above, you should have route <code>auth/yahoo</code>.
+This route accepts 3 parameters: <code>access_token</code>, <code>refresh_token</code> and <code>xoauth_yahoo_guid</code>.
+<code>access_token</code> and <code>xoauth_yahoo_guid</code> is REQUIRED.</p>
+
+<h2>
+<a id="issues" class="anchor" href="#issues" aria-hidden="true"><span class="octicon octicon-link"></span></a>Issues</h2>
+
+<p>If you receive a <code>401 Unauthorized</code> error, it is most likely because you have wrong access token or not yet specified any application "Permissions".
+Once you refresh access token with new permissions, try to send this access token again.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>The MIT License (MIT)</p>
+
+<p>Copyright (c) 2015 Eugene Obrezkov</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+        </section>
+
+        <footer>
+          passport-yahoo-token is maintained by <a href="https://github.com/ghaiklor">ghaiklor</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
