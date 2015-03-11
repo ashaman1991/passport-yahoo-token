@@ -1,44 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <title>passport-yahoo-token by ghaiklor</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <title>passport-yahoo-token by ghaiklor</title>
   </head>
-
   <body>
-    <div id="container">
-      <div class="inner">
+    <div class="wrapper">
+      <header>
+        <h1 class="header">passport-yahoo-token</h1>
+        <p class="header">Passport strategy for authenticating with Yahoo access tokens</p>
 
-        <header>
-          <h1>passport-yahoo-token</h1>
-          <h2>Passport strategy for authenticating with Yahoo access tokens</h2>
-        </header>
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/ghaiklor/passport-yahoo-token/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/ghaiklor/passport-yahoo-token/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/ghaiklor/passport-yahoo-token">View On GitHub</a></li>
+        </ul>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/ghaiklor/passport-yahoo-token/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/ghaiklor/passport-yahoo-token/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/ghaiklor/passport-yahoo-token" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/ghaiklor">ghaiklor</a></p>
 
-        <hr>
 
-        <section id="main_content">
-          <h1>
+      </header>
+      <section>
+        <h1>
 <a id="passport-yahoo-token" class="anchor" href="#passport-yahoo-token" aria-hidden="true"><span class="octicon octicon-link"></span></a>passport-yahoo-token</h1>
 
-<p><a href="http://badge.fury.io/js/passport-yahoo-token"><img src="https://badge.fury.io/js/passport-yahoo-token.svg" alt="npm version"></a> <a href="https://travis-ci.org/ghaiklor/passport-yahoo-token"><img src="https://travis-ci.org/ghaiklor/passport-yahoo-token.svg?branch=master" alt="Build Status"></a></p>
+<p><img src="https://img.shields.io/travis/ghaiklor/passport-yahoo-token.svg" alt="Build Status"> <img src="https://img.shields.io/coveralls/ghaiklor/passport-yahoo-token.svg" alt="Coverage"> <img src="https://img.shields.io/npm/dm/passport-yahoo-token.svg" alt="Downloads"> <img src="https://img.shields.io/npm/v/passport-yahoo-token.svg" alt="npm version"> <img src="https://img.shields.io/david/ghaiklor/passport-yahoo-token.svg" alt="dependencies"> <img src="https://img.shields.io/david/dev/ghaiklor/passport-yahoo-token.svg" alt="dev dependencies"> <img src="https://img.shields.io/npm/l/passport-yahoo-token.svg" alt="License"></p>
 
-<p><a href="http://passportjs.org/">Passport</a> strategies for authenticating with <a href="http://www.yahoo.com/">Yahoo!</a> OAuth2 access tokens.</p>
+<p><a href="http://passportjs.org/">Passport</a> strategy for authenticating with <a href="http://www.yahoo.com/">Yahoo!</a> access tokens using the OAuth 2.0 API.</p>
 
-<p>This module lets you authenticate using Yahoo! in your Node.js applications by access tokens.
+<p>This module lets you authenticate using Yahoo! in your Node.js applications.
 By plugging into Passport, Yahoo! authentication can be easily and unobtrusively integrated into any application or framework that supports <a href="http://www.senchalabs.org/connect/">Connect</a>-style middleware, including <a href="http://expressjs.com/">Express</a>.</p>
 
 <h2>
@@ -52,8 +51,8 @@ By plugging into Passport, Yahoo! authentication can be easily and unobtrusively
 <h3>
 <a id="configure-strategy" class="anchor" href="#configure-strategy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configure Strategy</h3>
 
-<p>The Yahoo authentication strategy authenticates users using a Yahoo account and OAuth2 access tokens.
-The strategy requires a <code>verify</code> callback, which accepts accessToken, refreshToken, profile and calls <code>done</code> providing a user, as well as <code>options</code> specifying a clientID and clientSecret.</p>
+<p>The Yahoo! authentication strategy authenticates users using a Yahoo! account and OAuth 2.0 tokens.
+The strategy requires a <code>verify</code> callback, which accepts these credentials and calls <code>next</code> providing a user, as well as <code>options</code> specifying a app ID and app secret.</p>
 
 <div class="highlight highlight-javascript"><pre>passport.use(<span class="pl-k">new</span> <span class="pl-en">YahooTokenStrategy</span>({
     clientID<span class="pl-k">:</span> YAHOO_CLIENT_ID,
@@ -72,7 +71,7 @@ The strategy requires a <code>verify</code> callback, which accepts accessToken,
 
 <p>For example, as route middleware in an <a href="http://expressjs.com/">Express</a> application:</p>
 
-<div class="highlight highlight-javascript"><pre>app.get(<span class="pl-s1"><span class="pl-pds">'</span>/auth/yahoo<span class="pl-pds">'</span></span>, passport.authenticate(<span class="pl-s1"><span class="pl-pds">'</span>yahoo-token<span class="pl-pds">'</span></span>);</pre></div>
+<div class="highlight highlight-javascript"><pre>app.get(<span class="pl-s1"><span class="pl-pds">'</span>/auth/yahoo<span class="pl-pds">'</span></span>, passport.authenticate(<span class="pl-s1"><span class="pl-pds">'</span>yahoo-token<span class="pl-pds">'</span></span>));</pre></div>
 
 <p>Or if you are using Sails framework:</p>
 
@@ -87,12 +86,7 @@ The strategy requires a <code>verify</code> callback, which accepts accessToken,
     }
 };</pre></div>
 
-<h3>
-<a id="parameters-in-request" class="anchor" href="#parameters-in-request" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parameters in request</h3>
-
-<p>Based on examples above, you should have route <code>auth/yahoo</code>.
-This route accepts 3 parameters: <code>access_token</code>, <code>refresh_token</code> and <code>xoauth_yahoo_guid</code>.
-<code>access_token</code> and <code>xoauth_yahoo_guid</code> is REQUIRED.</p>
+<p>The POST request to this route should include a JSON object with the keys <code>access_token</code>, <code>xoauth_yahoo_guid</code>, and optionally, <code>refresh_token</code> set to the credentials you receive from Yahoo!.</p>
 
 <h2>
 <a id="issues" class="anchor" href="#issues" aria-hidden="true"><span class="octicon octicon-link"></span></a>Issues</h2>
@@ -124,15 +118,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.</p>
-        </section>
-
-        <footer>
-          passport-yahoo-token is maintained by <a href="https://github.com/ghaiklor">ghaiklor</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
-
-        
-      </div>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
     </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
   </body>
 </html>
